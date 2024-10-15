@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff5722;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #target1 {
+            top: 20%;
+            left: 30%;
+        }
+
+        #target2 {
+            top: 60%;
+            left: 50%;
+        }
+
+        #target3 {
+            top: 80%;
+            left: 10%;
+        }
+
+        #message {
+            display: none;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">¡Ganaste!</div>
+
+    <div class="target" id="target1"></div>
+    <div class="target" id="target2"></div>
+    <div class="target" id="target3"></div>
+
+    <audio id="game-music" src="musica.mp3" loop autoplay></audio>
+
+    <script>
+        let clicks = 0;
+
+        document.querySelectorAll('.target').forEach(target => {
+            target.addEventListener('click', function() {
+                target.style.display = 'none';
+                clicks++;
+
+                if (clicks === 3) {
+                    document.getElementById('message').style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'win.html';
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
