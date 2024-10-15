@@ -1,0 +1,12 @@
+body{
+    background-color:black;
+}
+h1{
+    color:darkcyan;
+    font-family:cursive;
+}
+img{
+    
+    max-width: 100%;
+    height: auto;
+}
