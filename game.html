@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego</title>
+    <link rel="icon" href="img/button.ico">
+    <title>Busca los ojos</title>
     <style>
         body {
             margin: 0;
-            background-color: #121212;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,40 +15,47 @@
             color: white;
             font-family: Arial, sans-serif;
             position: relative;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        #image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        #background-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            z-index: -1;
         }
 
         .target {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #ff5722;
+            width: 10px;
+            height: 10px;
+            background-color: #333300;
             border-radius: 50%;
             cursor: pointer;
-        }
-
-        #target1 {
-            top: 20%;
-            left: 30%;
-        }
-
-        #target2 {
-            top: 60%;
-            left: 50%;
-        }
-
-        #target3 {
-            top: 80%;
-            left: 10%;
+            z-index: 1;
         }
 
         #message {
             display: none;
             font-size: 24px;
             text-align: center;
+            position: absolute;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
+
     <div id="message">¡Ganaste!</div>
 
     <div class="target" id="target1"></div>
@@ -57,9 +64,35 @@
 
     <audio id="game-music" src="musica.mp3" loop autoplay></audio>
 
-    <script>
-        let clicks = 0;
+    <div id="image-container">
+        <img id="background-img" src="img/img0.jpeg" alt="Fondo del juego">
+    </div>
 
+    <script>
+        function positionTargets() {
+            const img = document.getElementById('background-img');
+            const targets = [
+                { id: 'target1', xPercent: 66, yPercent: 47 },
+                { id: 'target2', xPercent: 47, yPercent: 10 },
+                { id: 'target3', xPercent: 16, yPercent: 20 }
+            ];
+
+            targets.forEach(target => {
+                const targetElement = document.getElementById(target.id);
+                const imgRect = img.getBoundingClientRect();
+
+                const targetX = imgRect.left + (target.xPercent / 100) * imgRect.width;
+                const targetY = imgRect.top + (target.yPercent / 100) * imgRect.height;
+
+                targetElement.style.left = `${targetX}px`;
+                targetElement.style.top = `${targetY}px`;
+            });
+        }
+
+        window.onload = positionTargets;
+        window.onresize = positionTargets;
+
+        let clicks = 0;
         document.querySelectorAll('.target').forEach(target => {
             target.addEventListener('click', function() {
                 target.style.display = 'none';
