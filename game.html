@@ -21,10 +21,9 @@
 
         #image-container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100vh;
             position: relative;
         }
 
@@ -36,10 +35,11 @@
         }
 
         .target {
+            opacity: 0;
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: #333300;
+            background-color: #FFFFFF;
             border-radius: 50%;
             cursor: pointer;
             z-index: 1;
@@ -56,25 +56,28 @@
 </head>
 <body>
 
-    <div id="message">¡Ganaste!</div>
+    <div id="message">¡Los encontraste!</div>
 
-    <div class="target" id="target1"></div>
-    <div class="target" id="target2"></div>
-    <div class="target" id="target3"></div>
+    <div class="target" id="target1" style="background-color: crimson;"></div>
+    <div class="target" id="target2" style="background-color:aquamarine;"></div>
+    <div class="target" id="target3" style="background-color: rgb(220, 107, 20);"></div>
 
-    <audio id="game-music" src="musica.mp3" loop autoplay></audio>
+    <audio id="game-music" src="sfx/musica.mp3" loop autoplay></audio>
+    <audio id="find-sound" src="sfx/find.mp3"></audio>
 
     <div id="image-container">
-        <img id="background-img" src="img/img0.jpeg" alt="Fondo del juego">
+        <img id="background-img" src="img/ojo1.png" alt="Fondo del juego">
+        <img id="background-img" src="img/ojo2.png" alt="Fondo del juego">
+        <img id="background-img" src="img/ojo3.png" alt="Fondo del juego">
     </div>
 
     <script>
         function positionTargets() {
             const img = document.getElementById('background-img');
             const targets = [
-                { id: 'target1', xPercent: 66, yPercent: 47 },
-                { id: 'target2', xPercent: 47, yPercent: 10 },
-                { id: 'target3', xPercent: 16, yPercent: 20 }
+                { id: 'target1', xPercent: 48, yPercent: 36 },
+                { id: 'target2', xPercent: 27, yPercent: 127 },
+                { id: 'target3', xPercent: 57, yPercent: 234 }
             ];
 
             targets.forEach(target => {
@@ -95,14 +98,19 @@
         let clicks = 0;
         document.querySelectorAll('.target').forEach(target => {
             target.addEventListener('click', function() {
-                target.style.display = 'none';
-                clicks++;
+                const audio = document.getElementById('find-sound');
+                console.log("op: "+target.style.opacity);
+                if (target.style.opacity == 0){
+                    target.style.opacity = 1;
+                    clicks++;
+                    audio.play();
+                }
 
                 if (clicks === 3) {
                     document.getElementById('message').style.display = 'block';
                     setTimeout(() => {
                         window.location.href = 'win.html';
-                    }, 1000);
+                    }, 4000);
                 }
             });
         });

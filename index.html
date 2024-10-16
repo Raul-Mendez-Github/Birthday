@@ -30,7 +30,7 @@
 <body>
     <div id="start-button"></div>
 
-    <audio id="start-sound" src="start-sound.mp3" preload="auto"></audio>
+    <audio id="start-sound" src="sfx/find.mp3" preload="auto"></audio>
 
     <script>
         document.getElementById('start-button').addEventListener('click', function() {
@@ -38,7 +38,7 @@
             startSound.play();
             setTimeout(() => {
                 window.location.href = 'game.html';
-            }, 1000); 
+            }, 500); 
         });
     </script>
 </body>
